@@ -115,7 +115,6 @@ class Panel(ScreenPanel):
         layers.insert_page(scroll, None, 0)
 
         self.content.add(layers)
-        self.gate_tool_map = self.build_gate_tool_map()
 
     def async_spools_refresh(self):
         while self.is_running:
@@ -148,6 +147,7 @@ class Panel(ScreenPanel):
         self.refresh()
 
     def refresh(self):
+        self.gate_tool_map = self.build_gate_tool_map()
         mmu = self._printer.get_stat("mmu")
         gate_status = mmu['gate_status']
         gate_material = mmu['gate_material']
@@ -187,7 +187,10 @@ class Panel(ScreenPanel):
             if str(gate_spool_id[i]) in self.spools:
                 spool=self.spools[str(gate_spool_id[i])]
                 material=spool.filament.material
-                vendor=spool.filament.vendor.name
+                if spool.filament.vendor:
+                    vendor=spool.filament.vendor.name
+                else:
+                    vendor = "n/a"
                 filament=spool.filament.name
                 pixbuf=spool.icon
                 used_length=spool.used_length/10.0
@@ -199,7 +202,8 @@ class Panel(ScreenPanel):
                     remaining_weight=f"{remaining_weight_val:.0f}g"
                     remaining_percentage_val=100/(spool.filament.weight/spool.remaining_weight)
                     remaining_percentage=f"{remaining_percentage_val:.0f}%"
-                color_hex=spool.filament.color_hex
+
+                color_hex=spool.filament.color_hex[:6].lower() if hasattr(spool.filament, 'color_hex') else ''
                 color = Gdk.RGBA()
                 if not Gdk.RGBA.parse(color, color_hex):
                     Gdk.RGBA.parse(color, '#' + color_hex)
@@ -249,8 +253,8 @@ class Panel(ScreenPanel):
     def get_tool_details(self, tools):
         tool_str = ''
         if len(tools) > 0:
-            tool_str = 'T' + ', '.join(map(str, tools[:2]))
-            tool_str += ', ...' if len(tools) > 2 else ''
+            tool_str = 'T' + ', '.join(map(str, tools[:1]))
+            tool_str += '..' if len(tools) > 1 else ''
         return tool_str
 
     def get_color_details(self, gate_color):

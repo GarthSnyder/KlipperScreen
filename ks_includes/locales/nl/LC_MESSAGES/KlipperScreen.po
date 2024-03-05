@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-20 00:09-0300\n"
-"PO-Revision-Date: 2023-12-02 13:25+0000\n"
+"POT-Creation-Date: 2024-01-12 21:42-0300\n"
+"PO-Revision-Date: 2024-02-10 14:01+0000\n"
 "Last-Translator: Thijs Triemstra <info@collab.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -68,7 +68,7 @@ msgid "Are you sure do you want to exclude the object?"
 msgstr "Weet je zeker dat je het object wilt uitsluiten?"
 
 msgid "Are you sure you want to run Emergency Stop?"
-msgstr "Weet je zeker dat je de Nood Stop wilt inschakelen?"
+msgstr "Weet je zeker dat je de Noodstop wilt inschakelen?"
 
 msgid "Are you sure you wish to cancel this print?"
 msgstr "Weet je zeker dat je deze print wilt annuleren?"
@@ -197,6 +197,9 @@ msgstr "Wil je %s herstellen?"
 
 msgid "Elapsed:"
 msgstr "Verstreken:"
+
+msgid "Ended official support in June 2023"
+msgstr "Ondersteuning officieel beëindigt in juni 2023"
 
 msgid "Error"
 msgstr "Error"
@@ -366,6 +369,9 @@ msgstr "Klipper probeert te starten"
 msgid "Klipper will reboot"
 msgstr "Klipper zal herstarten"
 
+msgid "KlipperScreen will drop support in June 2024"
+msgstr "KlipperScreen ondersteuning wordt in juni 2024 beëindigt"
+
 msgid ""
 "LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and should be used from extrude"
 msgstr ""
@@ -395,6 +401,9 @@ msgstr "Limieten"
 
 msgid "Load"
 msgstr "Laad"
+
+msgid "Loading..."
+msgstr "Laden..."
 
 msgid "Lower Nozzle"
 msgstr "Onderste Nozzle"
@@ -474,6 +483,12 @@ msgstr "Nieuw"
 msgid "No elegible macros:"
 msgstr "Macros komen niet in aanmerking:"
 
+msgid "No mesh has been loaded"
+msgstr "Geen mesh geladen"
+
+msgid "No wireless interface has been found"
+msgstr "Geen draadloze netwerk interface gevonden"
+
 msgid ""
 "Not supported for auto-detection, it needs to be configured in klipperscreen."
 "conf"
@@ -481,8 +496,17 @@ msgstr ""
 "Niet ondersteunt voor auto-detectie, dit moet worden geconfigureerd in "
 "klipperscreen.conf"
 
+msgid "Not working or not configured"
+msgstr "Niet werkend of niet geconfigureerd"
+
 msgid "Nothing selected"
 msgstr "Niets geselecteerd"
+
+msgid "Notification log empty"
+msgstr "Notificatie log is leeg"
+
+msgid "Notifications"
+msgstr "Notificaties"
 
 #, python-format
 msgid "Outdated by %d"
@@ -743,6 +767,12 @@ msgstr "Bezig met updaten"
 msgid "Uploaded"
 msgstr "Geupload"
 
+msgid "Warning"
+msgstr "Waarschuwing"
+
+msgid "WebRTC is not supported by the backend trying Stream"
+msgstr "WebRTC is niet ondersteund door de backend"
+
 msgid "XY Move Speed (mm/s)"
 msgstr "XY Move Snelheid (mm/s)"
 
@@ -799,9 +829,6 @@ msgstr "mm/s²"
 
 msgid "mm³/s"
 msgstr "mm³/s"
-
-#~ msgid "KlipperScreen will reboot"
-#~ msgstr "KlipperScreen zal herstarten"
 
 #~ msgid "Continue"
 #~ msgstr "Doorgaan"

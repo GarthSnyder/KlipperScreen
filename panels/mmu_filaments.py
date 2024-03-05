@@ -230,7 +230,6 @@ class Panel(ScreenPanel):
         layers.insert_page(edit_grid, None, 1)
 
         self.content.add(layers)
-        self.gate_tool_map = self.build_gate_tool_map()
 
     def post_attach(self):
         # Gtk Notebook will only change layer after show_all() hence this extra callback to fix state
@@ -264,6 +263,7 @@ class Panel(ScreenPanel):
 
     def refresh(self):
         self.use_spoolman = self._printer.spoolman and self._config.get_main_config().getboolean("mmu_use_spoolman", False)
+        self.gate_tool_map = self.build_gate_tool_map()
 
         mmu = self._printer.get_stat("mmu")
         gate_status = mmu['gate_status']
@@ -320,12 +320,10 @@ class Panel(ScreenPanel):
         tool_str = ''
         if len(tools) > 0:
             tool_str = 'T' + ', '.join(map(str, tools[:2]))
-            tool_str += ', ...' if len(tools) > 2 else ''
+            tool_str += '...' if len(tools) > 2 else ''
         return tool_str
 
     def get_color_details(self, gate_color):
-        if gate_color == None:
-            gate_color = ''
         color = Gdk.RGBA()
         if not Gdk.RGBA.parse(color, gate_color):
             Gdk.RGBA.parse(color, '#' + gate_color)
@@ -407,6 +405,8 @@ class Panel(ScreenPanel):
 
     def select_w3c_color(self, widget):
         self.ui_gate_color = self.labels['c_selector'].get_active_text()
+        if self.ui_gate_color is None:
+            self.ui_gate_color = ''
         self.update_edited_gate()
 
     def select_color(self, widget):
@@ -426,6 +426,8 @@ class Panel(ScreenPanel):
             color_str = color.to_string()
             self.labels['c_selector'].set_active(-1)
             self.ui_gate_color = self.rgba_to_hex(color)
+            if self.ui_gate_color is None:
+                self.ui_gate_color = ''
             self.update_edited_gate()
         dialog.destroy()
 
@@ -448,7 +450,7 @@ class Panel(ScreenPanel):
                 if sp is not None:
                     # Reset material and color from spoolman
                     self.ui_gate_material = sp.filament.material if sp.filament.material is not None else ""
-                    self.ui_gate_color = sp.filament.color_hex if sp.filament.color_hex is not None else ""
+                    self.ui_gate_color = sp.filament.color_hex[:6].lower() if hasattr(sp.filament, 'color_hex') else ""
                     # Also update the rest of the edit fields
                     self.labels['m_entry'].set_text(self.ui_gate_material)
                     self.labels['c_selector'].set_active(-1)

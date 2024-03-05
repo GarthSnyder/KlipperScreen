@@ -45,14 +45,14 @@ class Panel(ScreenPanel):
 
         self.labels = {
             't_decrease': self._gtk.Button('decrease', None, 'color1', scale=self.bts * 1.2),
-            'tool': self._gtk.Label("T0"),
+            'tool': Gtk.Label("T0"),
             't_increase': self._gtk.Button('increase', None, 'color2', scale=self.bts * 1.2),
             'g_decrease': self._gtk.Button('decrease', None, 'color1', scale=self.bts * 1.2),
-            'gate': self._gtk.Label("#0"),
+            'gate': Gtk.Label("#0"),
             'g_increase': self._gtk.Button('increase', None, 'color2', scale=self.bts * 1.2),
             'save': self._gtk.Button('mmu_save', 'Save', 'color3'),
             'es_decrease': self._gtk.Button('decrease', None, scale=self.bts * 0.6),
-            'es_group': self._gtk.Label("ES Group: A"),
+            'es_group': Gtk.Label("ES Group: A"),
             'es_increase': self._gtk.Button('increase', None, scale=self.bts * 0.6),
             'reset': self._gtk.Button('refresh', 'Reset', scale=self.bts, position=Gtk.PositionType.LEFT, lines=1),
             'endless_spool': Gtk.CheckButton("EndlessSpool - Editing"),
@@ -77,6 +77,8 @@ class Panel(ScreenPanel):
         self.labels['reset'].set_halign(Gtk.Align.CENTER)
         self.labels['reset'].set_valign(Gtk.Align.START)
         self.labels['reset'].set_vexpand(False)
+        self.labels['reset'].get_style_context().add_class("mmu_es_gate")
+        self.labels['reset'].get_style_context().add_class("mmu_es_gate_selected")
         self.labels['es_group'].set_xalign(0)
         self.labels['es_group'].get_style_context().add_class("mmu_endless_spool_toggle")
         self.labels['endless_spool'].get_style_context().add_class("mmu_endless_spool_toggle")
@@ -151,13 +153,13 @@ class Panel(ScreenPanel):
         scroll.add(grid)
         self.content.add(scroll)
 
+    def activate(self):
         mmu = self._printer.get_stat("mmu")
         self.ui_ttg_map = mmu['ttg_map']
         self.ui_endless_spool_groups = self.map_unique_groups(mmu['endless_spool_groups'])
         self.ui_sel_es_group = self.ui_endless_spool_groups[self.ui_ttg_map[self.ui_sel_tool]]
         self.ui_es_enabled = mmu['endless_spool']
 
-    def activate(self):
         self.labels['endless_spool'].set_active(self.ui_es_enabled == 1)
         self.update_map()
         self.update_es_group()
@@ -191,32 +193,31 @@ class Panel(ScreenPanel):
 
     def gen_map(self, htool=-1, hgate=-1):
         num_gates = len(self.ui_ttg_map)
-        tool_map = [[0 for y in range(num_gates)] for x in range(num_gates+4)]
-    
-        for tool in range(num_gates):
-            gate = self.ui_ttg_map[tool]
-            bold = 16 if (gate == hgate or tool == htool) else 1
+        tool_map = [[0] * num_gates for _ in range(num_gates + 4)]
+
+        for tool, gate in enumerate(self.ui_ttg_map):
+            bold = 16 if gate == hgate or tool == htool else 1
             y = tool
             tool_map[0][tool] |= 256 | (bold >> 3)
             for x in range(tool+1):
-                tool_map[x+1][y] = tool_map[x+1][y] | (10 * bold)
+                tool_map[x+1][y] |= (10 * bold)
             if gate == tool:
-                tool_map[tool+2][y] = tool_map[tool+2][y] | (10 * bold)
+                tool_map[tool+2][y] |= (10 * bold)
             else:
                 if gate > tool:
-                    tool_map[tool+2][y] = tool_map[tool+2][y] | (12 * bold)
-                    dir = 1
+                    tool_map[tool+2][y] |= (12 * bold)
+                    direction = 1
                 else:
-                    tool_map[tool+2][y] = tool_map[tool+2][y] | (9 * bold)
-                    dir = -1
-                for y in range(tool + dir, tool + (gate - tool), dir):
-                    tool_map[tool+2][y] = tool_map[tool+2][y] | (5 * bold)
+                    tool_map[tool+2][y] |= (9 * bold)
+                    direction = -1
+                for y in range(tool + direction, tool + (gate - tool), direction):
+                    tool_map[tool+2][y] |= (5 * bold)
                 if gate > tool:
-                    tool_map[tool+2][y+1] = tool_map[tool+2][y+1] | (3 * bold)
+                    tool_map[tool+2][y+1] |= (3 * bold)
                 else:
-                    tool_map[tool+2][y-1] = tool_map[tool+2][y-1] | (6 * bold)
+                    tool_map[tool+2][y-1] |= (6 * bold)
             for x in range(tool+3, num_gates+3):
-                tool_map[x][gate] = tool_map[x][gate] | (10 * bold)
+                tool_map[x][gate] |= (10 * bold)
             tool_map[num_gates+3][gate] |= 257 | (bold >> 3)
         return tool_map
 
@@ -225,7 +226,6 @@ class Panel(ScreenPanel):
         gate = self.ui_ttg_map[tool]
         es_group = self.ui_endless_spool_groups[self.ui_ttg_map[self.ui_sel_tool]]
         gates_in_group = self.build_es_spool_gate_group(es_group)
-
         self.labels['tool'].set_text(f"T{tool}")
         tool_map = self.gen_map(htool=tool, hgate=-1)
         grp = '╸' if len(gates_in_group) == 1 else '┓' + ('┫' * (len(gates_in_group) - 2)) + '┛'
@@ -242,7 +242,7 @@ class Panel(ScreenPanel):
             else:
                 msg += ' ' if cnt == 0 else '┃'
             self.labels[f'toolmap{y}'].set_text(msg)
-        self.labels[f'es_gate{gate}'].get_style_context().add_class("distbutton_active")
+        self.labels[f'es_gate{gate}'].get_style_context().add_class("mmu_es_gate_selected")
         self.labels['tool'].set_label(f"T{tool}")
         self.labels['gate'].set_label(f"Gate #{gate}")
 
@@ -250,9 +250,9 @@ class Panel(ScreenPanel):
         gates_in_group = self.build_es_spool_gate_group(self.ui_sel_es_group)
         for g in range(len(self.ui_ttg_map)):
             if g in gates_in_group:
-                self.labels[f"es_gate{g}"].get_style_context().add_class("distbutton_active")
+                self.labels[f"es_gate{g}"].get_style_context().add_class("mmu_es_gate_selected")
             else:
-                self.labels[f"es_gate{g}"].get_style_context().remove_class("distbutton_active")
+                self.labels[f"es_gate{g}"].get_style_context().remove_class("mmu_es_gate_selected")
             self.labels[f"es_gate{g}"].set_sensitive(self.ui_es_enabled == 1)
         grp = self.convert_number_to_letter(self.ui_sel_es_group)
         self.labels['es_group'].set_markup(f"<b>ES Group: {grp}</b>")
@@ -330,7 +330,7 @@ class Panel(ScreenPanel):
         else:
             label.set_text("This will set the MMU TTG map and ALL EndlessSpool groups\n\nto the configuration defined on this panel\n\nAre you sure you want to continue?")
 
-        grid = self._gtk.HomogeneousGrid()
+        grid = Gtk.Grid(row_homogeneous=True, column_homogeneous=True)
         grid.attach(label, 0, 0, 1, 1)
         buttons = [
             {"name": _("Apply"), "response": Gtk.ResponseType.APPLY},
@@ -343,11 +343,11 @@ class Panel(ScreenPanel):
         self._gtk.remove_dialog(dialog)
         if response_id == Gtk.ResponseType.APPLY:
             if action == "reset":
-                self._screen._ws.klippy.gcode_script(f"MMU_REMAP_TTG RESET=1 QUIET=1")
+                self._screen._ws.klippy.gcode_script(f"MMU_TTG_MAP RESET=1 QUIET=1")
                 self._screen._ws.klippy.gcode_script(f"MMU_ENDLESS_SPOOL RESET=1 QUIET=1")
             else:
                 ttg_map=",".join(map(str,self.ui_ttg_map))
                 groups=",".join(map(str,self.ui_endless_spool_groups))
-                self._screen._ws.klippy.gcode_script(f"MMU_REMAP_TTG MAP={ttg_map} QUIET=1")
+                self._screen._ws.klippy.gcode_script(f"MMU_TTG_MAP MAP={ttg_map} QUIET=1")
                 self._screen._ws.klippy.gcode_script(f"MMU_ENDLESS_SPOOL GROUPS={groups} QUIET=1 ENABLE={self.ui_es_enabled}")
 
