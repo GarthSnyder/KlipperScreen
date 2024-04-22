@@ -125,12 +125,18 @@ class KlipperScreen(Gtk.Window):
 
         self.connect("key-press-event", self._key_press_event)
         self.connect("configure_event", self.update_size)
-        monitor = Gdk.Display.get_default().get_primary_monitor()
-        if monitor is None:
-            self.wayland = True
-            monitor = Gdk.Display.get_default().get_monitor(0)
-        if monitor is None:
-            raise RuntimeError("Couldn't get default monitor")
+        display = Gdk.Display.get_default()
+        monitor_amount = Gdk.Display.get_n_monitors(display)
+        try:
+            mon_n = int(args.monitor)
+            if not (-1 < mon_n < monitor_amount):
+                raise ValueError
+        except ValueError:
+            mon_n = 0
+        logging.info(f"Monitors: {monitor_amount} using number: {mon_n}")
+        monitor = display.get_monitor(mon_n)
+        self.wayland = display.get_name().startswith('wayland') or display.get_primary_monitor() is None
+        logging.info(f"Wayland: {self.wayland} Display name: {display.get_name()}")
         self.width = self._config.get_main_config().getint("width", None)
         self.height = self._config.get_main_config().getint("height", None)
         if 'XDG_CURRENT_DESKTOP' in os.environ:
@@ -141,12 +147,14 @@ class KlipperScreen(Gtk.Window):
                 self.height = max(int(monitor.get_geometry().height * .5), 320)
         if self.width or self.height:
             logging.info("Setting windowed mode")
+            if mon_n > 0:
+                logging.error("Monitor selection is only supported for fullscreen")
             self.set_resizable(True)
             self.windowed = True
         else:
             self.width = monitor.get_geometry().width
             self.height = monitor.get_geometry().height
-            self.fullscreen()
+            self.fullscreen_on_monitor(self.get_screen(), mon_n)
         self.set_default_size(self.width, self.height)
         self.aspect_ratio = self.width / self.height
         self.vertical_mode = self.aspect_ratio < 1.0
@@ -279,7 +287,7 @@ class KlipperScreen(Gtk.Window):
                 "print_stats": ["print_duration", "total_duration", "filament_used", "filename", "state", "message",
                                 "info"],
                 "toolhead": ["homed_axes", "estimated_print_time", "print_time", "position", "extruder",
-                             "max_accel", "max_accel_to_decel", "max_velocity", "square_corner_velocity"],
+                             "max_accel", "minimum_cruise_ratio", "max_velocity", "square_corner_velocity"],
                 "virtual_sdcard": ["file_position", "is_active", "progress"],
                 "webhooks": ["state", "state_message"],
                 "firmware_retraction": ["retract_length", "retract_speed", "unretract_extra_length", "unretract_speed"],
@@ -368,7 +376,7 @@ class KlipperScreen(Gtk.Window):
         self.notification_log.append(log_entry)
         self.process_update("notify_log", log_entry)
 
-    def show_popup_message(self, message, level=3, save=True): # Happy Hare: added `save=` functionality
+    def show_popup_message(self, message, level=3, save=True, monospace=False): # Happy Hare: added `save=, monospace=` functionality
         message = message.replace("// ", "") # Happy Hare added to clean up multi-line messages
         if (datetime.now() - self.last_popup_time).seconds < 1:
             return
@@ -400,6 +408,8 @@ class KlipperScreen(Gtk.Window):
         popup = Gtk.Popover(relative_to=self.base_panel.titlebar,
                             halign=Gtk.Align.CENTER, width_request=int(self.width * .9))
         popup.get_style_context().add_class("message_popup_popover")
+        if monospace: # Happy Hare added
+            popup.get_style_context().add_class("mmu_monospace_popup")
         popup.add(msg)
         popup.popup()
 
@@ -448,8 +458,8 @@ class KlipperScreen(Gtk.Window):
         version = Gtk.Label(label=f"{functions.get_software_version()}", halign=Gtk.Align.END)
 
         help_msg = _("Provide KlipperScreen.log when asking for help.\n")
-        message = Gtk.Label(label=f"{help_msg}\n\n{e}", wrap=True)
-        scroll = self.gtk.ScrolledWindow(steppers=False)
+        message = Gtk.Label(label=f"{help_msg}\n\n{e}", wrap=True, wrap_mode=Pango.WrapMode.CHAR)
+        scroll = self.gtk.ScrolledWindow()
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scroll.add(message)
 
@@ -770,6 +780,7 @@ class KlipperScreen(Gtk.Window):
             return
         if self.prompt is not None: return # Happy Hare
         mmu_active = True if "mmu_main" in self._cur_panels else False # Happy Hare
+        self.files.refresh_files()
         self.show_panel("main_menu", None, remove_all=True, items=self._config.get_menu_items("__main"))
         if mmu_active: # Happy Hare
             self.show_panel("mmu_main", 'MMU')
@@ -884,7 +895,7 @@ class KlipperScreen(Gtk.Window):
                     )
                 elif data.startswith("// MMU"): # Happy Hare
                     if not data.startswith("// MMU [") and not data.startswith("// MMU BYPASS"):
-                        self.show_popup_message(data[3:], level=1)
+                        self.show_popup_message(data[3:], level=1, monospace=data.startswith("// MMU Statistics:"))
         self.process_update(action, data)
 
     def process_update(self, *args):
@@ -918,8 +929,6 @@ class KlipperScreen(Gtk.Window):
         self.gtk.remove_dialog(dialog)
         if response_id == Gtk.ResponseType.OK:
             self._send_action(None, method, params)
-        if method == "server.files.delete_directory":
-            GLib.timeout_add_seconds(2, self.files.refresh_files)
 
     def _send_action(self, widget, method, params):
         logging.info(f"{method}: {params}")
@@ -1071,7 +1080,6 @@ class KlipperScreen(Gtk.Window):
             return self._init_printer("Error getting printer object data with extra items")
 
         self.files.set_gcodes_path()
-        self.files.refresh_files()
 
         logging.info("Printer initialized")
         self.initialized = True
@@ -1091,6 +1099,9 @@ class KlipperScreen(Gtk.Window):
                 self.panels[self._cur_panels[-1]].update_graph_visibility()
         else:
             logging.error(f'Tempstore not ready: {tempstore} Retrying in 5 seconds')
+            GLib.timeout_add_seconds(5, self.init_tempstore)
+            return
+        if set(self.printer.tempstore) != set(self.printer.get_temp_devices()):
             GLib.timeout_add_seconds(5, self.init_tempstore)
             return
         server_config = self.apiclient.send_request("server/config")
@@ -1199,6 +1210,10 @@ def main():
     parser.add_argument(
         "-l", "--logfile", default=os.path.join(logdir, "KlipperScreen.log"), metavar='<logfile>',
         help="Location of KlipperScreen logfile output"
+    )
+    parser.add_argument(
+        "-m", "--monitor", default="0", metavar='<monitor>',
+        help="Number of the monitor, that will show Klipperscreen (default: 0)"
     )
     args = parser.parse_args()
 

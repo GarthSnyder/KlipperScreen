@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 21:42-0300\n"
-"PO-Revision-Date: 2024-01-21 12:01+0000\n"
-"Last-Translator: Guilouz <guilouz6@hotmail.com>\n"
+"POT-Creation-Date: 2024-04-03 14:35-0300\n"
+"PO-Revision-Date: 2024-03-07 19:01+0000\n"
+"Last-Translator: samuel fradette <fradette20@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -105,6 +105,9 @@ msgstr "Maillage du plateau"
 
 msgid "Bed screw configuration:"
 msgstr "Configuration des vis du plateau:"
+
+msgid "Both"
+msgstr ""
 
 msgid "Calibrate"
 msgstr "Calibrer"
@@ -198,11 +201,29 @@ msgstr "Voulez-vous récupérer %s ?"
 msgid "Elapsed:"
 msgstr "Écoulé:"
 
+msgid "Emergency Stop"
+msgstr ""
+
 msgid "Ended official support in June 2023"
 msgstr "Fin du support officiel en juin 2023"
 
 msgid "Error"
 msgstr "Erreur"
+
+msgid "Error clearing active spool"
+msgstr "Erreur lors de l'effacement de la bobine active"
+
+msgid "Error getting active spool"
+msgstr "Erreur dans l'obtention de la bobine active"
+
+msgid "Error setting active spool"
+msgstr "Erreur dans le réglage de la bobine active"
+
+msgid "Error trying to fetch spools"
+msgstr ""
+
+msgid "Error: Couldn't get a position to probe"
+msgstr ""
 
 msgid "Estimated Time Method"
 msgstr "Méthode d'estimation de la durée"
@@ -215,6 +236,9 @@ msgstr "Extra Grande"
 
 msgid "Extrude"
 msgstr "Extrusion"
+
+msgid "Extruders"
+msgstr "Extrudeuse"
 
 msgid "Extrusion +"
 msgstr "Extrusion +"
@@ -262,7 +286,7 @@ msgid "Firmware Restart"
 msgstr "Redémarrer Firmware"
 
 msgid "Flow:"
-msgstr "Débit:"
+msgstr "Débit :"
 
 msgid "Flowrate:"
 msgstr "Débit:"
@@ -373,7 +397,7 @@ msgid "Klipper will reboot"
 msgstr "Klipper va redémarrer"
 
 msgid "KlipperScreen will drop support in June 2024"
-msgstr ""
+msgstr "KlipperScreen ne sera plus pris en charge en juin 2024"
 
 msgid ""
 "LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and should be used from extrude"
@@ -406,7 +430,10 @@ msgid "Load"
 msgstr "Charger"
 
 msgid "Loading..."
-msgstr ""
+msgstr "Chargement..."
+
+msgid "Lost Connection to Moonraker"
+msgstr "Perte de connexion avec Moonraker"
 
 msgid "Lower Nozzle"
 msgstr "Rapprocher la buse"
@@ -428,9 +455,6 @@ msgstr "Max"
 
 msgid "Max Acceleration"
 msgstr "Accélération maximale"
-
-msgid "Max Acceleration to Deceleration"
-msgstr "Accélération à décélération maximale"
 
 msgid "Max Velocity"
 msgstr "Vélocité maximale"
@@ -455,6 +479,9 @@ msgstr "Menu"
 
 msgid "Mesh calibrate"
 msgstr "Calibration du maillage"
+
+msgid "Minimum Cruise Ratio"
+msgstr ""
 
 msgid "Modified"
 msgstr "Modifié"
@@ -487,10 +514,10 @@ msgid "No elegible macros:"
 msgstr "Macros non éligibles :"
 
 msgid "No mesh has been loaded"
-msgstr ""
+msgstr "Aucun maillage chargé"
 
 msgid "No wireless interface has been found"
-msgstr ""
+msgstr "Pas de périphérique sans-fil trouvé"
 
 msgid ""
 "Not supported for auto-detection, it needs to be configured in klipperscreen."
@@ -500,16 +527,16 @@ msgstr ""
 "dans klipperscreen.conf"
 
 msgid "Not working or not configured"
-msgstr ""
+msgstr "Ne fonctionne pas ou n'est pas configuré"
 
 msgid "Nothing selected"
 msgstr "Rien de sélectionné"
 
 msgid "Notification log empty"
-msgstr ""
+msgstr "Journal de notification vide"
 
 msgid "Notifications"
-msgstr ""
+msgstr "Notifications"
 
 #, python-format
 msgid "Outdated by %d"
@@ -763,7 +790,7 @@ msgid "Up To Date"
 msgstr "À jour"
 
 msgid "Update"
-msgstr "Mise à jour"
+msgstr "Mis à jour"
 
 msgid "Updating"
 msgstr "Mise à jour"
@@ -772,10 +799,10 @@ msgid "Uploaded"
 msgstr "Envoyé"
 
 msgid "Warning"
-msgstr ""
+msgstr "Danger"
 
 msgid "WebRTC is not supported by the backend trying Stream"
-msgstr ""
+msgstr "WebRTC n'est pas pris en charge par le backend essai du Stream"
 
 msgid "XY Move Speed (mm/s)"
 msgstr "Vitesse de déplacement XY (mm/s)"
@@ -833,6 +860,9 @@ msgstr "mm/s²"
 
 msgid "mm³/s"
 msgstr "mm³/s"
+
+#~ msgid "Max Acceleration to Deceleration"
+#~ msgstr "Accélération à décélération maximale"
 
 #~ msgid "Continue"
 #~ msgstr "Continuer"

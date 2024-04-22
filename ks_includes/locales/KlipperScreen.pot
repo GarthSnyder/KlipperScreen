@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 21:42-0300\n"
+"POT-Creation-Date: 2024-04-03 14:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,9 @@ msgstr ""
 msgid "Bed screw configuration:"
 msgstr ""
 
+msgid "Both"
+msgstr ""
+
 msgid "Calibrate"
 msgstr ""
 
@@ -197,10 +200,28 @@ msgstr ""
 msgid "Elapsed:"
 msgstr ""
 
+msgid "Emergency Stop"
+msgstr ""
+
 msgid "Ended official support in June 2023"
 msgstr ""
 
 msgid "Error"
+msgstr ""
+
+msgid "Error clearing active spool"
+msgstr ""
+
+msgid "Error getting active spool"
+msgstr ""
+
+msgid "Error setting active spool"
+msgstr ""
+
+msgid "Error trying to fetch spools"
+msgstr ""
+
+msgid "Error: Couldn't get a position to probe"
 msgstr ""
 
 msgid "Estimated Time Method"
@@ -213,6 +234,9 @@ msgid "Extra Large"
 msgstr ""
 
 msgid "Extrude"
+msgstr ""
+
+msgid "Extruders"
 msgstr ""
 
 msgid "Extrusion +"
@@ -402,6 +426,9 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
+msgid "Lost Connection to Moonraker"
+msgstr ""
+
 msgid "Lower Nozzle"
 msgstr ""
 
@@ -421,9 +448,6 @@ msgid "Max"
 msgstr ""
 
 msgid "Max Acceleration"
-msgstr ""
-
-msgid "Max Acceleration to Deceleration"
 msgstr ""
 
 msgid "Max Velocity"
@@ -448,6 +472,9 @@ msgid "Menu"
 msgstr ""
 
 msgid "Mesh calibrate"
+msgstr ""
+
+msgid "Minimum Cruise Ratio"
 msgstr ""
 
 msgid "Modified"

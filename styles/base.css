@@ -156,6 +156,15 @@ combobox box button {
 
 combobox arrow {
     min-width: 1em;
+    background-color: @bg;
+}
+
+combobox arrow:disabled {
+-gtk-icon-source: None;
+}
+
+combobox cellview {
+    padding: 0.5em;
 }
 
 entry {
@@ -248,6 +257,10 @@ undershoot.bottom {
     background-image: none;
 }
 
+spinner {
+    animation-timing-function: steps(10);
+}
+
 separator {
     margin: 1em 2em;
     background-color: rgba(255, 255, 255, 0.5);
@@ -267,9 +280,8 @@ trough {
     margin: .5em .5em;
 }
 
-.action_bar {
-    /* min-width: 4.5em; */
-    /* min-height: 4.5em; */
+.action_bar :disabled{
+    opacity: .6;
 }
 
 .title_bar {
@@ -544,10 +556,14 @@ trough {
 
 popover {
     background-color: @bg;
+    border: 0.1em solid white;
+    padding: 0em;
 }
 
 popover button {
     background-color: @bg;
+    padding: 1em 3.1em;
+    margin: 0;
 }
 
 .screensaver,
@@ -615,6 +631,8 @@ trough progress {
     border-bottom: .4em solid @color1;
 }
 
+/* vvv Happy Hare added vvv */
+
 .mmu_runout slider, .mmu_runout highlight, .mmu_runout fill {
     min-height: 0;
 }
@@ -635,7 +653,7 @@ trough progress {
 }
 
 .mmu_color_swatch {
-    font-size: 2.8em;
+    font-size: 2.3em;
 }
 
 .mmu_sensor_text {
@@ -663,6 +681,12 @@ trough progress {
 }
 
 .mmu_gate_text {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+.mmu_spoolid_text {
     margin-top: 8px;
     margin-bottom: 8px;
     font-size: 1.2em;
@@ -754,3 +778,11 @@ trough progress {
     padding-bottom: 6px;
 }
 
+.mmu_monospace_popup {
+    font-family: Free Mono;
+}
+
+.mmu_combobox box button {
+    border: 0;
+    padding: 0 1em;
+}

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 21:42-0300\n"
-"PO-Revision-Date: 2024-01-06 09:08+0000\n"
-"Last-Translator: Henrique Magarotto <magarotto@gmail.com>\n"
+"POT-Creation-Date: 2024-04-03 14:35-0300\n"
+"PO-Revision-Date: 2024-02-22 00:02+0000\n"
+"Last-Translator: Matheus Mösken Diegues <dmosken2015@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/pt/>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #, python-format
 msgid "%s will be updated to version"
@@ -105,6 +105,9 @@ msgstr "Nivelamento"
 
 msgid "Bed screw configuration:"
 msgstr "Configuração da Porca de Mesa:"
+
+msgid "Both"
+msgstr ""
 
 msgid "Calibrate"
 msgstr "Calibrar"
@@ -198,11 +201,29 @@ msgstr "Deseja recuperar %s?"
 msgid "Elapsed:"
 msgstr "Tempo Corrido:"
 
-msgid "Ended official support in June 2023"
+msgid "Emergency Stop"
 msgstr ""
+
+msgid "Ended official support in June 2023"
+msgstr "Suporte oficial encerrado em Junho de 2023"
 
 msgid "Error"
 msgstr "Erro"
+
+msgid "Error clearing active spool"
+msgstr ""
+
+msgid "Error getting active spool"
+msgstr ""
+
+msgid "Error setting active spool"
+msgstr ""
+
+msgid "Error trying to fetch spools"
+msgstr ""
+
+msgid "Error: Couldn't get a position to probe"
+msgstr ""
 
 msgid "Estimated Time Method"
 msgstr "Método de Tempo Estimado"
@@ -215,6 +236,9 @@ msgstr "Extra Grande"
 
 msgid "Extrude"
 msgstr "Extrusão"
+
+msgid "Extruders"
+msgstr ""
 
 msgid "Extrusion +"
 msgstr "+ Extrusão"
@@ -371,7 +395,7 @@ msgid "Klipper will reboot"
 msgstr "Klipper será reiniciado"
 
 msgid "KlipperScreen will drop support in June 2024"
-msgstr ""
+msgstr "KlipperScreen perderá o suporte em Junho de 2024"
 
 msgid ""
 "LOAD_FILAMENT/UNLOAD_FILAMENT are hidden and should be used from extrude"
@@ -404,6 +428,9 @@ msgstr "Carregar"
 msgid "Loading..."
 msgstr ""
 
+msgid "Lost Connection to Moonraker"
+msgstr ""
+
 msgid "Lower Nozzle"
 msgstr "Descer Extrusor"
 
@@ -424,9 +451,6 @@ msgstr "Max"
 
 msgid "Max Acceleration"
 msgstr "Aceleração Máxima"
-
-msgid "Max Acceleration to Deceleration"
-msgstr "Max. aceleração de desaceleração"
 
 msgid "Max Velocity"
 msgstr "Velocidade máxima"
@@ -451,6 +475,9 @@ msgstr "Menu"
 
 msgid "Mesh calibrate"
 msgstr "Calibrar Malha"
+
+msgid "Minimum Cruise Ratio"
+msgstr ""
 
 msgid "Modified"
 msgstr "Modificado"
@@ -483,10 +510,10 @@ msgid "No elegible macros:"
 msgstr "Sem macros elegíveis:"
 
 msgid "No mesh has been loaded"
-msgstr ""
+msgstr "Nenhuma malha foi carregada"
 
 msgid "No wireless interface has been found"
-msgstr ""
+msgstr "Nenhuma interface sem fio foi encontrada"
 
 msgid ""
 "Not supported for auto-detection, it needs to be configured in klipperscreen."
@@ -496,13 +523,13 @@ msgstr ""
 "klipperscreen.conf"
 
 msgid "Not working or not configured"
-msgstr ""
+msgstr "Não funciona ou não está configurado"
 
 msgid "Nothing selected"
 msgstr "Nada selecionado"
 
 msgid "Notification log empty"
-msgstr ""
+msgstr "Log de notificação vazio"
 
 msgid "Notifications"
 msgstr "Notificações"
@@ -828,6 +855,9 @@ msgstr "mm/s²"
 
 msgid "mm³/s"
 msgstr ""
+
+#~ msgid "Max Acceleration to Deceleration"
+#~ msgstr "Max. aceleração de desaceleração"
 
 #~ msgid "Continue"
 #~ msgstr "Continuar"
